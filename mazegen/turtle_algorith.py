@@ -1,5 +1,5 @@
 from turtle import Turtle, Screen
-from maze import draw_baseshape_square
+# from maze import draw_baseshape_square
 import random
 
 def create_maze(grid_size=10, cell_size=40):
