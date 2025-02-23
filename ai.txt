@@ -1,0 +1,121 @@
+min_y, max_y = -200, 200
+min_x, max_x = -100, 100
+
+def draw_baseshape(cell_size=20):  # cell_size parameter determines the size of each cell
+    """Create the rows and cells of the maze with specific dimensions.
+    Args:
+        cell_size: The width/height of each cell in pixels/units
+    Returns:
+        list: A 2D list containing coordinate boundaries for each cell
+    """
+    try:
+        gridsz = int(input("Enter the grid size: "))
+        grid = []
+        
+        for row in range(gridsz):
+            row_coords = []
+            for col in range(gridsz):
+                # Calculate the actual coordinates for each cell
+                x1 = min_x + (col * cell_size)  # left boundary
+                x2 = x1 + cell_size             # right boundary
+                y1 = max_y - (row * cell_size)  # top boundary
+                y2 = y1 - cell_size             # bottom boundary
+                
+                # Store cell information as a dictionary
+                cell = {
+                    'coordinates': (row, col),    # Grid coordinates
+                    'boundaries': (x1, y1, x2, y2), # Actual space coordinates
+                    'walls': {                    # Wall states (True = wall exists)
+                        'north': True,
+                        'south': True,
+                        'east': True,
+                        'west': True
+                    }
+                }
+                row_coords.append(cell)
+            grid.append(row_coords)
+            
+        return grid
+    
+    except ValueError:
+        print("Please enter a valid integer for grid size")
+        return None
+
+# Example usage:
+maze_grid = draw_baseshape(cell_size=40)  # Creates cells 40x40 units in size
+
+# Example of how to access the information
+if maze_grid:
+    # Access first cell's information
+    cell = maze_grid[0][0]
+    print(f"Cell coordinates: {cell['coordinates']}")
+    print(f"Cell boundaries: {cell['boundaries']}")
+    print(f"Cell walls: {cell['walls']}")
+    
+    # Get dimensions of the entire maze
+    rows = len(maze_grid)
+    cols = len(maze_grid[0])
+    total_width = cols * 40  # cell_size * number of columns
+    total_height = rows * 40  # cell_size * number of rows
+    print(f"Maze dimensions: {total_width}x{total_height}")
+
+Copy
+
+Insert at cursor
+python
+Key features of this implementation:
+
+Each cell now contains:
+
+Grid coordinates (row, col)
+
+Actual boundary coordinates (x1, y1, x2, y2)
+
+Wall information for all four sides
+
+The cell_size parameter determines the actual size of each cell
+
+You can use this structure to:
+
+# Example of working with the maze
+if maze_grid:
+    # Get a specific cell
+    cell = maze_grid[1][1]
+    
+    # Get cell's actual boundaries
+    x1, y1, x2, y2 = cell['boundaries']
+    
+    # Check if a wall exists
+    has_north_wall = cell['walls']['north']
+    
+    # Remove a wall (useful for maze generation)
+    cell['walls']['north'] = False
+    
+    # Calculate center of cell (useful for drawing)
+    center_x = (x1 + x2) / 2
+    center_y = (y1 + y2) / 2
+
+Copy
+
+Insert at cursor
+python
+For maze generation algorithms, you can now:
+
+Use the grid coordinates for pathfinding
+
+Use the actual boundaries for drawing
+
+Modify wall states as you carve out the maze
+
+Calculate exact positions for drawing paths or objects
+
+This structure makes it easier to:
+
+Draw walls (using the boundary coordinates)
+
+Create passages (by removing walls)
+
+Place objects within cells (using the cell boundaries)
+
+Implement maze generation algorithms (using the grid coordinates and wall states)
+

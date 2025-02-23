@@ -1,5 +1,6 @@
 # from obstacles import create_random_obstacles,is_path_blocked,obstacles
-from obstacles import *
+# from obstacles import *
+from mazegen import turtle_algorith
 
 
 directions = ['forward', 'right', 'back', 'left']
